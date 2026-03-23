@@ -11,10 +11,20 @@ Step-by-step instructions to install all plugins, MCP servers, and skills.
 
 ## Step 1: Install Plugins
 
-Open Claude Code in any project and run these commands one at a time:
+Open Claude Code in any project and run these commands one at a time.
+
+### Superpowers (via Plugin Marketplace)
+
+Register the marketplace first, then install superpowers from it:
 
 ```
-/plugin install superpowers
+/plugin marketplace add obra/superpowers-marketplace
+/plugin install superpowers@superpowers-marketplace
+```
+
+### Other Plugins
+
+```
 /plugin install frontend-design
 /plugin install code-review
 /plugin install feature-dev
@@ -32,7 +42,7 @@ After installing all plugins, reload them:
 
 | Plugin | Source | What it provides |
 |--------|--------|-----------------|
-| **superpowers** | claude-plugins-official | Brainstorming, plan writing, plan execution, subagent-driven development, TDD, debugging, code review, git worktrees, skill authoring |
+| **superpowers** | superpowers-marketplace | Brainstorming, plan writing, plan execution, subagent-driven development, TDD, debugging, code review, git worktrees, skill authoring |
 | **frontend-design** | claude-plugins-official | High-quality frontend UI generation (avoids generic AI aesthetics) |
 | **code-review** | claude-plugins-official | Structured code review for PRs |
 | **feature-dev** | claude-plugins-official | Guided feature development with codebase analysis and architecture focus |
@@ -94,9 +104,17 @@ Run `/skills` to see all available skills. You should see:
 
 Gives Claude a tool for breaking down complex problems step by step. Adds a `sequential_thinking` tool that Claude can use internally for multi-step reasoning.
 
+**macOS/Linux:**
 ```bash
 claude mcp add sequential-thinking --scope user -- npx -y @modelcontextprotocol/server-sequential-thinking
 ```
+
+**Windows:**
+```bash
+claude mcp add sequential-thinking --scope user -- cmd /c npx -y @modelcontextprotocol/server-sequential-thinking
+```
+
+> **Windows note:** `npx` is a `.cmd` script on Windows and needs the `cmd /c` wrapper to execute properly as an MCP server. If you skip this, `/doctor` will show a warning. This applies to any MCP server that uses `npx`.
 
 This registers the server globally (all projects). You'll need to restart Claude Code after adding it.
 
