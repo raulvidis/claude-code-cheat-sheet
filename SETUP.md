@@ -38,7 +38,7 @@ Here's what lives where:
 
 | File / Folder | Purpose |
 |---|---|
-| **`CLAUDE.md`** | Main instruction file — Claude reads it every session. Keep under 200 lines: build/test commands, architecture decisions, conventions, gotchas |
+| **`CLAUDE.md`** | Main instruction file — Claude reads it every session. Keep under 200 lines / 10KB. Agents should always keep this file updated and within the size limit |
 | **`CLAUDE.local.md`** | Personal overrides (auto-gitignored) |
 | **`.claude/settings.json`** | Permissions — `allow` (no confirmation), `deny` (blocked entirely), everything else asks first |
 | **`.claude/settings.local.json`** | Personal permission overrides (auto-gitignored) |
@@ -53,6 +53,10 @@ Here's what lives where:
 | **`~/.claude/projects/`** | Session history + auto-memory per project |
 
 **Getting started:** Run `/init` to generate a starter `CLAUDE.md`, add `.claude/settings.json` with allow/deny rules, create a command or two for your most common workflows, and split instructions into `.claude/rules/` as your config grows.
+
+---
+
+## For Agents
 
 ---
 
@@ -85,6 +89,14 @@ Register the marketplace first, then install superpowers from it:
 /plugin install code-simplifier
 /plugin install context7
 ```
+
+### Optional Plugins
+
+```
+/plugin install claude-md-management
+```
+
+Audits and maintains your `CLAUDE.md` files — scores them against quality criteria, suggests improvements, and captures session learnings via `/revise-claude-md`.
 
 After installing all plugins, reload them:
 
@@ -179,40 +191,6 @@ The **context7** plugin (installed in Step 1) automatically registers an MCP ser
 ### Verify MCP Servers
 
 After restarting Claude Code, you should see MCP tools available. You can check by asking Claude to use `sequential_thinking` or to look up library docs.
-
----
-
-## Step 5: Status Line
-
-The status line shows useful info (model, tokens, cost) at the bottom of the Claude Code terminal.
-
-This is already configured in `~/.claude/settings.json`:
-
-```json
-{
-  "statusLine": {
-    "type": "command",
-    "command": "npx -y ccstatusline@latest",
-    "padding": 0
-  }
-}
-```
-
-If it's not set up yet, run inside Claude Code:
-
-```
-/config set statusLine.type command
-/config set statusLine.command "npx -y ccstatusline@latest"
-/config set statusLine.padding 0
-```
-
-Or manually add the `statusLine` block to `~/.claude/settings.json`.
-
----
-
-## Step 6: Agents
-
-The plugins register specialized agents automatically. After `/reload-plugins`, you should see ~11 agents in the reload output. These are used internally by the skills (e.g., spec reviewers, code quality reviewers, implementers) and don't need manual setup.
 
 ---
 
