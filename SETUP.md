@@ -2,6 +2,60 @@
 
 Step-by-step instructions to install all plugins, MCP servers, and skills.
 
+## TL;DR
+
+This guide sets up a fully loaded Claude Code environment with **superpowers** (brainstorming, TDD, debugging, plan execution, code review), **frontend-design**, **feature-dev**, **code-simplifier**, and **context7** plugins, plus MCP servers for sequential thinking and library docs, a custom status line, and specialized agents — all working together so Claude Code can handle end-to-end development workflows out of the box.
+
+---
+
+## For Users
+
+### ccstatusline
+
+A lightweight status line for Claude Code that displays real-time session info — model name, token usage, and cost — at the bottom of your terminal.
+
+```bash
+npx ccstatusline@latest
+```
+
+Run it once to see it in action, or configure it as your permanent status line:
+
+```
+/config set statusLine.type command
+/config set statusLine.command "npx -y ccstatusline@latest"
+/config set statusLine.padding 0
+```
+
+### Useful Resources
+
+- [100+ ready-to-use agent personas](https://github.com/msitarzewski/agency-agents) — drop into `~/.claude/agents/` for specialized subagents
+
+### Understanding the `.claude` Folder
+
+Before diving into this setup guide, it helps to understand what you're configuring. The `.claude` folder is Claude Code's control center — it holds your instructions, custom commands, permission rules, and session memory. There are actually **two** `.claude` directories: one in your project (team config, committed to git) and one in your home directory `~/.claude/` (personal preferences, machine-local state).
+
+Here's what lives where:
+
+| File / Folder | Purpose |
+|---|---|
+| **`CLAUDE.md`** | Main instruction file — Claude reads it every session. Keep under 200 lines: build/test commands, architecture decisions, conventions, gotchas |
+| **`CLAUDE.local.md`** | Personal overrides (auto-gitignored) |
+| **`.claude/settings.json`** | Permissions — `allow` (no confirmation), `deny` (blocked entirely), everything else asks first |
+| **`.claude/settings.local.json`** | Personal permission overrides (auto-gitignored) |
+| **`.claude/rules/`** | Modular instruction files that load alongside CLAUDE.md. Support path-scoped rules via YAML frontmatter |
+| **`.claude/commands/`** | Custom slash commands — each `.md` file becomes `/project:command-name`. Supports shell output injection via `` !`command` `` and `$ARGUMENTS` |
+| **`.claude/skills/`** | Auto-invoked workflows — Claude triggers them based on the task context. Each skill is a folder with `SKILL.md` + supporting files |
+| **`.claude/agents/`** | Specialized subagent personas with their own system prompt, tool access, and model preference |
+| **`~/.claude/CLAUDE.md`** | Global instructions across all projects |
+| **`~/.claude/commands/`** | Personal commands available everywhere (show as `/user:command-name`) |
+| **`~/.claude/skills/`** | Personal skills available everywhere |
+| **`~/.claude/agents/`** | Personal agents available everywhere |
+| **`~/.claude/projects/`** | Session history + auto-memory per project |
+
+**Getting started:** Run `/init` to generate a starter `CLAUDE.md`, add `.claude/settings.json` with allow/deny rules, create a command or two for your most common workflows, and split instructions into `.claude/rules/` as your config grows.
+
+---
+
 ## Prerequisites
 
 - Claude Code CLI installed and authenticated
