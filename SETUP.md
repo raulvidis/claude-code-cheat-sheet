@@ -4,7 +4,7 @@ Step-by-step instructions to install all plugins, MCP servers, and skills.
 
 ## TL;DR
 
-This guide sets up a fully loaded Claude Code environment with **superpowers** (brainstorming, TDD, debugging, plan execution, code review), **frontend-design**, **feature-dev**, **code-simplifier**, and **context7** plugins, plus MCP servers for sequential thinking and library docs, a custom status line, and specialized agents — all working together so Claude Code can handle end-to-end development workflows out of the box.
+This guide sets up a fully loaded Claude Code environment with **superpowers** (brainstorming, TDD, debugging, plan execution, code review), **frontend-design**, **feature-dev**, **code-simplifier**, and **context7** plugins, plus a custom status line and specialized agents — all working together so Claude Code can handle end-to-end development workflows out of the box.
 
 ---
 
@@ -166,31 +166,13 @@ Run `/skills` to see all available skills. You should see:
 
 ## Step 4: MCP Servers
 
-### Sequential Thinking
-
-Gives Claude a tool for breaking down complex problems step by step. Adds a `sequential_thinking` tool that Claude can use internally for multi-step reasoning.
-
-**macOS/Linux:**
-```bash
-claude mcp add sequential-thinking --scope user -- npx -y @modelcontextprotocol/server-sequential-thinking
-```
-
-**Windows:**
-```bash
-claude mcp add sequential-thinking --scope user -- cmd /c npx -y @modelcontextprotocol/server-sequential-thinking
-```
-
-> **Windows note:** `npx` is a `.cmd` script on Windows and needs the `cmd /c` wrapper to execute properly as an MCP server. If you skip this, `/doctor` will show a warning. This applies to any MCP server that uses `npx`.
-
-This registers the server globally (all projects). You'll need to restart Claude Code after adding it.
-
 ### Context7 (via plugin)
 
 The **context7** plugin (installed in Step 1) automatically registers an MCP server for fetching up-to-date library documentation and code examples. No manual configuration needed.
 
 ### Verify MCP Servers
 
-After restarting Claude Code, you should see MCP tools available. You can check by asking Claude to use `sequential_thinking` or to look up library docs.
+After restarting Claude Code, you should see MCP tools available. You can check by asking Claude to look up library docs.
 
 ---
 
